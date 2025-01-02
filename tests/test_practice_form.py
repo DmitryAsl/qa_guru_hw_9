@@ -38,14 +38,13 @@ def test_registration_form():
     registration_form.fill_city(city)
     registration_form.submit()
 
-    registration_form.should_registered_user_with(firstName, lastName,
-                                                  email,
-                                                  gender,
-                                                  mobile,
-                                                  birth_day, birth_month, birth_year,
-                                                  subject1, subject2,
-                                                  hobby,
-                                                  picture,
-                                                  address,
-                                                  state,
-                                                  city)
+    registration_form.assert_filled_full_name(firstName, lastName)
+    registration_form.assert_filled_email(email)
+    registration_form.assert_filled_gender(gender)
+    registration_form.assert_filled_mobile(mobile)
+    registration_form.assert_filled_birthday(birth_day, birth_month, birth_year)
+    registration_form.assert_filled_subjects(subject1, subject2)
+    registration_form.assert_filled_hobby(hobby)
+    registration_form.assert_filled_picture(picture)
+    registration_form.assert_filled_address(address)
+    registration_form.assert_filled_state_and_city(state, city)

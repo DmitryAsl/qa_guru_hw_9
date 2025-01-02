@@ -1,6 +1,7 @@
 import os
 from selene import browser, be, have, command
 
+
 class RegistrationPage:
 
     def __init__(self):
@@ -58,18 +59,33 @@ class RegistrationPage:
         browser.element('#city').click()
         browser.all('[id^="react-select-4-option"]').element_by(have.text(city)).click()
 
-    def should_registered_user_with(self, firstName, lastName, email, gender, mobile, birth_day, birth_month, birth_year,
-                               subject1, subject2, hobby, picture, address, state, city):
-        browser.all('tr').element_by(have.text('Student Name')).should(have.text(f'{firstName} {lastName}'))
-        browser.all('tr').element_by(have.text('Student Email')).should(have.text(email))
-        browser.all('tr').element_by(have.text('Gender')).should(have.text(gender))
-        browser.all('tr').element_by(have.text('Mobile')).should(have.text(mobile))
-        browser.all('tr').element_by(have.text('Date of Birth')).should(
-            have.text(f'{birth_day} {birth_month},{birth_year}'))
-        browser.all('tr').element_by(have.text('Subjects')).should(have.text(f'{subject1}, {subject2}'))
-        browser.all('tr').element_by(have.text('Hobbies')).should(have.text(hobby))
-        browser.all('tr').element_by(have.text('Picture')).should(have.text(picture))
-        browser.all('tr').element_by(have.text('Address')).should(have.text(address))
+    def assert_filled_state_and_city(self, state, city):
         browser.all('tr').element_by(have.text('State and City')).should(have.text(f'{state} {city}'))
 
+    def assert_filled_address(self, address):
+        browser.all('tr').element_by(have.text('Address')).should(have.text(address))
 
+    def assert_filled_picture(self, picture):
+        browser.all('tr').element_by(have.text('Picture')).should(have.text(picture))
+
+    def assert_filled_hobby(self, hobby):
+        browser.all('tr').element_by(have.text('Hobbies')).should(have.text(hobby))
+
+    def assert_filled_subjects(self, subject1, subject2):
+        browser.all('tr').element_by(have.text('Subjects')).should(have.text(f'{subject1}, {subject2}'))
+
+    def assert_filled_birthday(self, birth_day, birth_month, birth_year):
+        browser.all('tr').element_by(have.text('Date of Birth')).should(
+            have.text(f'{birth_day} {birth_month},{birth_year}'))
+
+    def assert_filled_mobile(self, mobile):
+        browser.all('tr').element_by(have.text('Mobile')).should(have.text(mobile))
+
+    def assert_filled_gender(self, gender):
+        browser.all('tr').element_by(have.text('Gender')).should(have.text(gender))
+
+    def assert_filled_email(self, email):
+        browser.all('tr').element_by(have.text('Student Email')).should(have.text(email))
+
+    def assert_filled_full_name(self, firstname, lastname):
+        browser.all('tr').element_by(have.text('Student Name')).should(have.text(f'{firstname} {lastname}'))
