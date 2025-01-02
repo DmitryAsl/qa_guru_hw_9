@@ -24,6 +24,7 @@ def test_registration_form():
     registration_form = RegistrationPage()
     registration_form.open()
 
+
     registration_form.fill_firstName(firstName)
     registration_form.fill_lastName(lastName)
     registration_form.fill_email(email)

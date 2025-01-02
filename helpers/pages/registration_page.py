@@ -9,22 +9,21 @@ class RegistrationPage:
     def open(self):
         browser.open('/automation-practice-form')
 
-    def fill_firstName(self, value):
+    def __fill_firstName(self, value):
         browser.element('#firstName').type(value)
-
-    def fill_lastName(self, value):
+    def __fill_lastName(self, value):
         browser.element('#lastName').type(value)
 
-    def fill_email(self, email):
+    def __fill_email(self, email):
         browser.element('#userEmail').type(email)
 
-    def fill_gender(self, gender):
+    def __fill_gender(self, gender):
         browser.element(f'input[value={gender}]').perform(command.js.click)
 
-    def fill_mobile(self, mobile):
+    def __fill_mobile(self, mobile):
         browser.element('#userNumber').type(mobile)
 
-    def fill_birthday(self, day, month, year):
+    def __fill_birthday(self, day, month, year):
         browser.element('#dateOfBirthInput').click()
         browser.element('.react-datepicker__year-select').click()
         browser.all('.react-datepicker__year-select option').element_by(have.text(year)).click()
@@ -32,29 +31,29 @@ class RegistrationPage:
         browser.all('.react-datepicker__month-select option').element_by(have.text(month)).click()
         browser.element(f'.react-datepicker__day--0{day}').click()
 
-    def fill_subjects(self, subject1, *args):
+    def __fill_subjects(self, subject1, *args):
         self.subjectsInput.click().type(subject1)
         browser.all('.subjects-auto-complete__menu').element_by(have.text(subject1)).click()
         for subject in args:
             self.subjectsInput.click().type(subject).press_enter()
 
-    def fill_hobbby(self, hobby):
+    def __fill_hobbby(self, hobby):
         browser.all('.custom-checkbox label').element_by(have.text(hobby)).click()
 
-    def fill_picture(self, path):
+    def __fill_picture(self, path):
         browser.element('#uploadPicture').send_keys(path)
 
-    def submit(self):
+    def __submit(self):
         browser.element("#submit").click()
 
-    def fill_address(self, address):
+    def __fill_address(self, address):
         browser.element('#currentAddress').type(address)
 
-    def fill_state(self, state):
+    def __fill_state(self, state):
         browser.element('#state').click()
         browser.all('[id^="react-select-3-option"]').element_by(have.text(state)).click()
 
-    def fill_city(self, city):
+    def __fill_city(self, city):
         browser.element('#city').click()
         browser.all('[id^="react-select-4-option"]').element_by(have.text(city)).click()
 
