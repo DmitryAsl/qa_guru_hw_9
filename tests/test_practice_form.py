@@ -1,5 +1,6 @@
 import os
 from selene import browser, be, have, command
+from helpers.pages.registration_page import RegistrationPage
 
 firstName = 'John'
 lastName = 'Smith'
@@ -19,44 +20,32 @@ city = 'Karnal'
 picture_path = os.path.abspath(f'../data/{picture}')
 
 
-def test_full_content_form():
-    browser.open('/automation-practice-form')
-    # заполнение всех полей формы
-    browser.element('#firstName').type(firstName)
-    browser.element('#lastName').type(lastName)
-    browser.element('#userEmail').type(email)
-    browser.element(f'input[value={gender}]').perform(command.js.click)
-    browser.element('#userNumber').type(mobile)
-    browser.element('#dateOfBirthInput').click()
-    browser.element('.react-datepicker__year-select').click()
-    browser.all('.react-datepicker__year-select option').element_by(have.text(birth_year)).click()
-    browser.element('.react-datepicker__month-select').click()
-    browser.all('.react-datepicker__month-select option').element_by(have.text(birth_month)).click()
-    browser.element(f'.react-datepicker__day--0{birth_day}').click()
-    browser.element('#subjectsInput').click().type(subject1)
-    browser.all('.subjects-auto-complete__menu').element_by(have.text(subject1)).click()
-    browser.element('#subjectsInput').click().type(subject2).press_enter()
-    browser.all('.custom-checkbox label').element_by(have.text(hobby)).click()
-    browser.element('#uploadPicture').send_keys(picture_path)
-    browser.element('#currentAddress').type(address)
-    browser.element('#state').click()
-    browser.all('[id^="react-select-3-option"]').element_by(have.text(state)).click()
-    browser.element('#city').click()
-    browser.all('[id^="react-select-4-option"]').element_by(have.text(city)).click()
+def test_registration_form():
+    registration_form = RegistrationPage()
+    registration_form.open()
 
-    browser.element("#submit").click()
+    registration_form.fill_firstName(firstName)
+    registration_form.fill_lastName(lastName)
+    registration_form.fill_email(email)
+    registration_form.fill_gender(gender)
+    registration_form.fill_mobile(mobile)
+    registration_form.fill_birthday(birth_day, birth_month, birth_year)
+    registration_form.fill_subjects(subject1, subject2)
+    registration_form.fill_hobbby(hobby)
+    registration_form.fill_picture(picture_path)
+    registration_form.fill_address(address)
+    registration_form.fill_state(state)
+    registration_form.fill_city(city)
+    registration_form.submit()
 
-    # проверка таблицы заполненных полей
-    # альтернативная проверка для полей - browser.element(f'//tr[td[1][text()="Mobile"]]/td[2][text()="{mobile}"]').should(be.visible)
-    browser.all('tr').element_by(have.text('Student Name')).should(have.text(f'{firstName} {lastName}'))
-    browser.all('tr').element_by(have.text('Student Email')).should(have.text(email))
-    browser.all('tr').element_by(have.text('Gender')).should(have.text(gender))
-    browser.all('tr').element_by(have.text('Mobile')).should(have.text(mobile))
-    browser.all('tr').element_by(have.text('Date of Birth')).should(
-        have.text(f'{birth_day} {birth_month},{birth_year}'))
-    browser.all('tr').element_by(have.text('Subjects')).should(have.text(f'{subject1}, {subject2}'))
-    browser.all('tr').element_by(have.text('Hobbies')).should(have.text(hobby))
-    browser.all('tr').element_by(have.text('Picture')).should(have.text(picture))
-    browser.all('tr').element_by(have.text('Hobbies')).should(have.text(hobby))
-    browser.all('tr').element_by(have.text('Address')).should(have.text(address))
-    browser.all('tr').element_by(have.text('State and City')).should(have.text(f'{state} {city}'))
+    registration_form.should_registered_user_with(firstName, lastName,
+                                                  email,
+                                                  gender,
+                                                  mobile,
+                                                  birth_day, birth_month, birth_year,
+                                                  subject1, subject2,
+                                                  hobby,
+                                                  picture,
+                                                  address,
+                                                  state,
+                                                  city)
