@@ -45,8 +45,10 @@ class RegistrationPage:
     def __fill_hobbby(self, hobby):
         browser.all('.custom-checkbox label').element_by(have.text(hobby)).click()
 
-    def __fill_picture(self, path):
-        browser.element('#uploadPicture').send_keys(path)
+    def __fill_picture(self, name):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.abspath(os.path.join(current_dir, '..', '..', 'data', name))
+        browser.element('#uploadPicture').send_keys(full_path)
 
     def __submit(self):
         browser.element("#submit").click()
