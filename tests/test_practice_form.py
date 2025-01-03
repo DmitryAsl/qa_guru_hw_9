@@ -1,5 +1,4 @@
 import os
-from selene import browser, be, have, command
 from helpers.pages.registration_page import RegistrationPage
 
 firstName = 'John'
@@ -23,7 +22,6 @@ picture_path = os.path.abspath(f'../data/{picture}')
 def test_registration_form():
     registration_form = RegistrationPage()
     registration_form.open()
-
     registration_form.fill_firstName(firstName)
     registration_form.fill_lastName(lastName)
     registration_form.fill_email(email)
@@ -32,7 +30,7 @@ def test_registration_form():
     registration_form.fill_birthday(birth_day, birth_month, birth_year)
     registration_form.fill_subjects(subject1, subject2)
     registration_form.fill_hobbby(hobby)
-    registration_form.fill_picture(picture_path)
+    registration_form.fill_picture(picture)
     registration_form.fill_address(address)
     registration_form.fill_state(state)
     registration_form.fill_city(city)
